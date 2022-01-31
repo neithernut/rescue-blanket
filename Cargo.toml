@@ -1,0 +1,6 @@
+[package]
+name = "rescue-blanket"
+version = "0.1.0"
+authors = ["Julian Ganz <neither@nut.email>"]
+edition = "2021"
+
