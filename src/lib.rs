@@ -144,6 +144,57 @@ pub trait Escapable: Display + Sized {
     /// The resulting [Escaped] will escape the value when being formatted via
     /// [Display] using the given [Escaper].
     fn escaped_with<E: Escaper>(self, escaper: E) -> Escaped<Self, E>;
+
+    /// Wrap this value in an [Escaped] for escaping with [char::escape_default]
+    ///
+    /// The resulting [Escaped] will escape the value when being formatted via
+    /// [Display] using [char::escape_default] as [Escaper].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rescue_blanket::Escapable;
+    /// let s = "foo=\"bar\"";
+    /// // Compare against str::escape_default()
+    /// assert_eq!(s.escaped_default().to_string(), s.escape_default().to_string());
+    /// ```
+    fn escaped_default(self) -> Escaped<Self, fn(char) -> std::char::EscapeDefault> {
+        self.escaped_with(char::escape_default)
+    }
+
+    /// Wrap this value in an [Escaped] for escaping with [char::escape_debug]
+    ///
+    /// The resulting [Escaped] will escape the value when being formatted via
+    /// [Display] using [char::escape_debug] as [Escaper].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rescue_blanket::Escapable;
+    /// let s = "foo=\"bar\"";
+    /// // Compare against str::escape_debug()
+    /// assert_eq!(s.escaped_debug().to_string(), s.escape_debug().to_string());
+    /// ```
+    fn escaped_debug(self) -> Escaped<Self, fn(char) -> std::char::EscapeDebug> {
+        self.escaped_with(char::escape_debug)
+    }
+
+    /// Wrap this value in an [Escaped] for escaping with [char::escape_unicode]
+    ///
+    /// The resulting [Escaped] will escape the value when being formatted via
+    /// [Display] using [char::escape_unicode] as [Escaper].
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use rescue_blanket::Escapable;
+    /// let s = "foo=\"bar\"";
+    /// // Compare against str::escape_unicode()
+    /// assert_eq!(s.escaped_unicode().to_string(), s.escape_unicode().to_string());
+    /// ```
+    fn escaped_unicode(self) -> Escaped<Self, fn(char) -> std::char::EscapeUnicode> {
+        self.escaped_with(char::escape_unicode)
+    }
 }
 
 impl<T: Display> Escapable for T {
