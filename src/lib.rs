@@ -119,3 +119,30 @@ impl<E: Escaper> fmt::Write for WriteProxy<'_, '_, E> {
     }
 }
 
+
+/// Convenience trait for escaping items
+///
+/// This trait augments types implementing [Display] with functions for wrapping
+/// them in instances of [Escaped], which will escape the value when being
+/// formatted.
+///
+/// # Examples
+///
+/// ```
+/// use rescue_blanket::Escapable;
+/// assert_eq!("foo=\"bar\"".escaped_with(char::escape_default).to_string(), "foo=\\\"bar\\\"");
+/// ```
+pub trait Escapable: Display + Sized {
+    /// Wrap this value in an [Escaped] for escaped formatting
+    ///
+    /// The resulting [Escaped] will escape the value when being formatted via
+    /// [Display] using the given [Escaper].
+    fn escaped_with<E: Escaper>(self, escaper: E) -> Escaped<Self, E>;
+}
+
+impl<T: Display> Escapable for T {
+    fn escaped_with<E: Escaper>(self, escaper: E) -> Escaped<Self, E> {
+        Escaped::new(self, escaper)
+    }
+}
+
