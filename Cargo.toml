@@ -1,6 +1,7 @@
 [package]
 name = "rescue-blanket"
 version = "0.1.0"
+license = "MIT"
 authors = ["Julian Ganz <neither@nut.email>"]
 edition = "2021"
 
