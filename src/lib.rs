@@ -1,3 +1,41 @@
+//! Escape values while they are being formatted
+//!
+//! When processing data, and particularly when forwarding data, in the form of
+//! character sequences (strings, streams, ...), one needs to escape certain
+//! characters or constructs which have some special meaning in the format. This
+//! crate provides [Escaped], a wrapper implementing [Display] such that the
+//! inner value is automatically escaped when formatted.
+//!
+//! The escaping logic can be customized via the [Escaper] trait, or by
+//! supplying an `FnMut(char) -> Display + Clone`.
+//!
+//! Rather than importing [Escaped] directly, users are encouraged to import
+//! [Escapable] instead. This convenience trait augments all [Sized] [Display]
+//! types with functions wrapping the value in an [Escaped] (for unsized types,
+//! a reference to the value may be used instead):
+//!
+//! ```
+//! use rescue_blanket::Escapable;
+//! println!("foo=\"{}\"", "bar=\"baz\"".escaped_with(char::escape_default));
+//! ```
+//!
+//! # Why using `rescue_blanket`?
+//!
+//! There are a number of crates already for escaping strings, and there are
+//! already [str::escape_default], [escape_debug](str::escape_debug) and
+//! [escape_unicode](str::escape_unicode), so why yet another library?
+//!
+//! These functions, and the libraries I found, only work well if the values
+//! you need to escape are already accessible as [str]. However, sometimes your
+//! values are more complex, maybe recursive, and you may not want put escaping
+//! logic inside their [Display] implementation. After all, the need for
+//! escaping arises from the context the value is formatted in, not from the
+//! value itself.
+//!
+//! You could always format complex values into some buffer (e.g. [String]) and
+//! apply escaping on the result, but that requires the additional buffer and
+//! you may want to avoid that. Depending on the [Escaper], the use of [Escaped]
+//! does not involve any additional buffering.
 
 use std::fmt::{self, Display};
 
