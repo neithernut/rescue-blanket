@@ -145,6 +145,14 @@ pub trait Escapable: Display + Sized {
     /// [Display] using the given [Escaper].
     fn escaped_with<E: Escaper>(self, escaper: E) -> Escaped<Self, E>;
 
+    /// Wrap this value in an [Escaped] for escaped formatting
+    ///
+    /// The resulting [Escaped] will escape the value when being formatted via
+    /// [Display] using the given [Escaper].
+    fn escaped_with_default<E: Escaper + Default>(self) -> Escaped<Self, E> {
+        Escaped::new_default(self)
+    }
+
     /// Wrap this value in an [Escaped] for escaping with [char::escape_default]
     ///
     /// The resulting [Escaped] will escape the value when being formatted via
