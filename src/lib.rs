@@ -56,6 +56,12 @@ impl<F: FnMut(char) -> O + Clone, O: Display> Escaper for F {
 /// When displayed via its own implementation of [Display], the encapsulated
 /// item will be escaped via the [Escaper] during the formatting process.
 ///
+/// # Note
+///
+/// Users of the library will usually prefer importing and using [Escapable]
+/// over using this type directly. An exception may be the construction of
+/// interfaces enforcing some sort of escaping for inputs.
+///
 /// # Examples
 ///
 /// ```
