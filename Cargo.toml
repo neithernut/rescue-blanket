@@ -1,7 +1,9 @@
 [package]
 name = "rescue-blanket"
+description = "Escape values while they are being formatted"
 version = "0.1.0"
 license = "MIT"
 authors = ["Julian Ganz <neither@nut.email>"]
 edition = "2021"
+keywords = ["escape","escaping","fmt"]
 
