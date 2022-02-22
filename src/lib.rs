@@ -1,3 +1,5 @@
+#![cfg_attr(not(feature = "std"), no_std)]
+
 //! Escape values while they are being formatted
 //!
 //! When processing data, and particularly when forwarding data, in the form of

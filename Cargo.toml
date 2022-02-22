@@ -7,3 +7,6 @@ authors = ["Julian Ganz <neither@nut.email>"]
 edition = "2021"
 keywords = ["escape","escaping","fmt"]
 
+[features]
+default = ["std"]
+std = []
