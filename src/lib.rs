@@ -37,7 +37,7 @@
 //! you may want to avoid that. Depending on the [Escaper], the use of [Escaped]
 //! does not involve any additional buffering.
 
-use std::fmt::{self, Display};
+use core::fmt::{self, Display};
 
 
 /// Character-wise processor implementing some escaping logic
@@ -204,7 +204,7 @@ pub trait Escapable: Display + Sized {
     /// // Compare against str::escape_default()
     /// assert_eq!(s.escaped_default().to_string(), s.escape_default().to_string());
     /// ```
-    fn escaped_default(self) -> Escaped<Self, fn(char) -> std::char::EscapeDefault> {
+    fn escaped_default(self) -> Escaped<Self, fn(char) -> core::char::EscapeDefault> {
         self.escaped_with(char::escape_default)
     }
 
@@ -221,7 +221,7 @@ pub trait Escapable: Display + Sized {
     /// // Compare against str::escape_debug()
     /// assert_eq!(s.escaped_debug().to_string(), s.escape_debug().to_string());
     /// ```
-    fn escaped_debug(self) -> Escaped<Self, fn(char) -> std::char::EscapeDebug> {
+    fn escaped_debug(self) -> Escaped<Self, fn(char) -> core::char::EscapeDebug> {
         self.escaped_with(char::escape_debug)
     }
 
@@ -238,7 +238,7 @@ pub trait Escapable: Display + Sized {
     /// // Compare against str::escape_unicode()
     /// assert_eq!(s.escaped_unicode().to_string(), s.escape_unicode().to_string());
     /// ```
-    fn escaped_unicode(self) -> Escaped<Self, fn(char) -> std::char::EscapeUnicode> {
+    fn escaped_unicode(self) -> Escaped<Self, fn(char) -> core::char::EscapeUnicode> {
         self.escaped_with(char::escape_unicode)
     }
 }
